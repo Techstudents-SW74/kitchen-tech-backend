@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.user.model;
 
+import com.kitchenapp.kitchentech.business.model.Restaurant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +22,5 @@ public class UserDto {
     private LocalDate birthDate;
     private String photo;
     private Role role;
+    private Restaurant restaurant;
 }

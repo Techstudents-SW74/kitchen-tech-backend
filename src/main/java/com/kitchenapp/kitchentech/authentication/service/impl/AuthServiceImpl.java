@@ -43,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
                 .phone(registerRequest.getPhone())
                 .photo(registerRequest.getPhoto())
                 .role(Role.USER)
+                .restaurant(registerRequest.getRestaurant())
                 .build();
         userRepository.save(user);
         return AuthResponse.builder()
@@ -102,6 +103,9 @@ public class AuthServiceImpl implements AuthService {
         }
         if (registerRequest.getPassword().length() > 100) {
             throw new ValidationException("La contraseña del usuario no debe exceder los 100 caracteres");
+        }
+        if(registerRequest.getRestaurant() == null){
+            throw  new ValidationException("El usuario debe estar asignado a un restaurante");
         }
     }
 

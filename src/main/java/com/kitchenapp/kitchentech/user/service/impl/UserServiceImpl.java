@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
             userToUpdate.setBirthDate(user.getBirthDate());
             userToUpdate.setPhoto(user.getPhoto());
             userToUpdate.setPhone(user.getPhone());
+            userToUpdate.setRestaurant(user.getRestaurant());
             return userRepository.save(userToUpdate);
         }else{
             return null;
@@ -89,6 +90,9 @@ public class UserServiceImpl implements UserService {
         }
         if (user.getEmail().length() > 200) {
             throw new ValidationException("El email del usuario no debe exceder los 300 caracteres");
+        }
+        if(user.getRestaurant() == null){
+            throw new ValidationException("El usuario tiene que estar sujeto a un restaurante");
         }
     }
 }

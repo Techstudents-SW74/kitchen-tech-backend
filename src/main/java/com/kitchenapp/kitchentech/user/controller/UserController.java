@@ -67,6 +67,7 @@ public class UserController {
                 .birthDate(user.getBirthDate())
                 .photo(user.getPhoto())
                 .role(user.getRole())
+                .restaurant(user.getRestaurant())
                 .build();
     }
 }
