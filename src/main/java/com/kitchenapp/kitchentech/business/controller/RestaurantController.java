@@ -1,5 +1,7 @@
 package com.kitchenapp.kitchentech.business.controller;
 
+import com.kitchenapp.kitchentech.authentication.model.AuthResponse;
+import com.kitchenapp.kitchentech.authentication.model.RegisterRequest;
 import com.kitchenapp.kitchentech.business.model.Restaurant;
 import com.kitchenapp.kitchentech.business.model.RestaurantRequest;
 import com.kitchenapp.kitchentech.business.service.RestaurantService;
@@ -27,6 +29,16 @@ public class RestaurantController {
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantService.getAllRestaurants();
         return new ResponseEntity<List<Restaurant>>(restaurants, HttpStatus.OK);
+    }
+
+    // URL: http://localhost:8080/api/kitchentech/v1/restaurant
+    // Method: POST
+    @Transactional
+    @PostMapping
+    public ResponseEntity<Restaurant> registerRestaurant(@RequestBody RestaurantRequest restaurantRequest) {
+        restaurantService.validateRestaurant(restaurantRequest);
+        Restaurant newRestaurant = restaurantService.createRestaurant(restaurantRequest);
+        return new ResponseEntity<Restaurant>(newRestaurant, HttpStatus.CREATED);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/restaurant/{restaurantId}

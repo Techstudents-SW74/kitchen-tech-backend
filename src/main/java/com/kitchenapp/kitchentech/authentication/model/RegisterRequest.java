@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.authentication.model;
 
+import com.kitchenapp.kitchentech.business.model.Restaurant;
 import com.kitchenapp.kitchentech.user.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,4 +23,5 @@ public class RegisterRequest {
     private LocalDate birthDate;
     private String photo;
     private Role role;
+    private Restaurant restaurant;
 }

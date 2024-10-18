@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RestaurantService {
 
-    public abstract Restaurant createRestaurant(Restaurant restaurant);
+    public abstract Restaurant createRestaurant(RestaurantRequest restaurantRequest);
     public abstract Restaurant getRestaurantById(Long id);
     public abstract Restaurant updateRestaurant(Restaurant restaurant);
     public abstract void deleteRestaurant(Long id);

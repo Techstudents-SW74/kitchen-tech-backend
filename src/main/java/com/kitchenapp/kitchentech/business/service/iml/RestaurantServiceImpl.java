@@ -5,9 +5,11 @@ import com.kitchenapp.kitchentech.business.model.RestaurantRequest;
 import com.kitchenapp.kitchentech.business.repository.RestaurantRepository;
 import com.kitchenapp.kitchentech.business.service.RestaurantService;
 import com.kitchenapp.kitchentech.exception.ValidationException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RestaurantServiceImpl implements RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
@@ -17,7 +19,18 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant createRestaurant(Restaurant restaurant) {
+    public Restaurant createRestaurant(RestaurantRequest restaurantRequest) {
+
+        Restaurant restaurant = Restaurant.builder()
+                .name(restaurantRequest.getName())
+                .email(restaurantRequest.getEmail())
+                .description(restaurantRequest.getDescription())
+                .image(restaurantRequest.getImage())
+                .logo(restaurantRequest.getLogo())
+                .city(restaurantRequest.getCity())
+                .district(restaurantRequest.getDistrict())
+                .build();
+
         return restaurantRepository.save(restaurant);
     }
 

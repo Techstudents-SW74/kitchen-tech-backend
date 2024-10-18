@@ -29,7 +29,7 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/api/kitchentech/v1/auth/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                                .requestMatchers("/api/kitchentech/v1/users").authenticated()
+                                .requestMatchers("/api/kitchentech/v1/user","/api/kitchentech/v1/restaurant").authenticated()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->
