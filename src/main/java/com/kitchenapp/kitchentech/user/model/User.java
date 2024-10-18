@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.user.model;
 
+import com.kitchenapp.kitchentech.business.model.Restaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,6 +52,11 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id", nullable = true)
+    private Restaurant restaurant;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
