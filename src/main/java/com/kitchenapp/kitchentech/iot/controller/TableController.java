@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class TableController {
         this.tableService = tableService;
     }
 
-    // URL: http://localhost:8080/api/kitchentech/v1/product
+    // URL: http://localhost:8080/api/kitchentech/v1/table
     // Method: GET
     @Transactional(readOnly = true)
     @GetMapping
@@ -33,5 +34,16 @@ public class TableController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(tableService.getAllTables(), HttpStatus.OK);
+    }
+
+    // URL: http://localhost:8080/api/kitchentech/v1/table/{tableId}
+    // Method: GET
+    @Transactional(readOnly = true)
+    @GetMapping("/{tableId}")
+    public ResponseEntity<Table> getTableById(@PathVariable(name = "tableId") Long tableId) {
+        if(tableService.getTableById(tableId) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(tableService.getTableById(tableId), HttpStatus.OK);
     }
 }
