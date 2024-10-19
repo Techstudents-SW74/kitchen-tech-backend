@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.iot.controller;
 
+import com.kitchenapp.kitchentech.business.model.Product;
 import com.kitchenapp.kitchentech.iot.model.Table;
 import com.kitchenapp.kitchentech.iot.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,16 @@ public class TableController {
     public ResponseEntity<Table> createTable(@RequestBody Table table) {
         tableService.validateTable(table);
         return new ResponseEntity<>(tableService.createTable(table), HttpStatus.CREATED);
+    }
+
+    // URL: http://localhost:8080/api/kitchentech/v1/table/{tableId}
+    // Method: PUT
+    @PutMapping("/{tableId}")
+    public ResponseEntity<Table> updateTable(@PathVariable(name = "tableId") Long tableId, @RequestBody Table table) {
+        if(tableService.getTableById(tableId) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        tableService.validateTable(table);
+        return new ResponseEntity<>(tableService.updateTable(table), HttpStatus.OK);
     }
 }
