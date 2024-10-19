@@ -62,4 +62,15 @@ public class TableController {
         tableService.validateTable(table);
         return new ResponseEntity<>(tableService.updateTable(table), HttpStatus.OK);
     }
+
+    // URL: http://localhost:8080/api/kitchentech/v1/table/{tableId}
+    // Method: DELETE
+    @DeleteMapping("/{tableId}")
+    public ResponseEntity<String> deleteTable(@PathVariable(name = "tableId") Long tableId) {
+        if(tableService.getTableById(tableId) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        tableService.deleteTable(tableId);
+        return new ResponseEntity<>("Table deleted successfully", HttpStatus.OK);
+    }
 }
