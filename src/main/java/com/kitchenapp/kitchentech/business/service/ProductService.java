@@ -5,11 +5,13 @@ import com.kitchenapp.kitchentech.business.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    List<Product> findAll();
-    Product findById(Long id);
-    Product save(Product product);
-    void delete(Long id);
-    Product update(Product product);
-    List<Product> getProductByCategory(String category);
+    public List<Product> getAllProducts();
+    public Product getProductById(Long id);
+    public Product createProduct(Product product);
+    public void deleteProduct(Long id);
+    public Product updateProduct(Product product);
+    public List<Product> getProductByCategory(String category);
+    public void validateProduct(Product product);
+
 
 }

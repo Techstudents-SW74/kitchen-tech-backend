@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,18 +24,17 @@ public class Product {
     @Column(name = "product_price", nullable = false, length = 10)
     private Double productPrice;
 
-    @Column(name = "product_image_url", nullable = false, length = 250)
+    @Column(name = "product_image_url", length = 250)
     private String productImageUrl;
 
     @Column(name = "category", nullable = false, length = 50)
     private String category;
 
-    @Column(name = "currency", nullable = false, length = 5)
-    private String currency;
+    @Column(name = "restaurant_id", nullable = false)
+    private long restaurantId;
 
-    @Column(name = "tax", nullable = false)
-    private Double tax;
-
-    //@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //private List<Supply> supplies;
+    @ElementCollection
+    @CollectionTable(name = "product_supplies", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "supplies")
+    private List<SupplyDTO> supplies = new ArrayList<>();
 }
