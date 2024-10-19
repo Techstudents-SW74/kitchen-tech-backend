@@ -28,11 +28,11 @@ public class Supply {
     private String metricUnit;
 
     @Column (name = "cost_per_unit", nullable = false)
-    private double costPerUnit;
+    private Double costPerUnit;
 
     @Column (name = "state_of_supply", nullable = false, length = 50)
     private String stateOfSupply;
 
     @Column (name = "estimated_daily_use", nullable = false)
-    private double estimatedDailyUse;
+    private Double estimatedDailyUse;
 }
