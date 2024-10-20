@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@jakarta.persistence.Table (name = "product")
+@jakarta.persistence.Table (name = "table")
 public class Table {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
