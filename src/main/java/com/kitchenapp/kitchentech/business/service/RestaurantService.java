@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.business.service;
 
+import com.kitchenapp.kitchentech.authentication.model.RegisterRequest;
 import com.kitchenapp.kitchentech.business.model.Restaurant;
 import com.kitchenapp.kitchentech.business.model.RestaurantRequest;
 
@@ -14,4 +15,5 @@ public interface RestaurantService {
     public abstract List<Restaurant> getAllRestaurants();
     public void existsRestaurantById(Long id);
     public void validateRestaurant(RestaurantRequest restaurantRequest);
+    public void existsRestaurantByName(RestaurantRequest restaurantRequest);
 }

@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.business.service.iml;
 
+import com.kitchenapp.kitchentech.authentication.model.RegisterRequest;
 import com.kitchenapp.kitchentech.business.model.Restaurant;
 import com.kitchenapp.kitchentech.business.model.RestaurantRequest;
 import com.kitchenapp.kitchentech.business.repository.RestaurantRepository;
@@ -108,6 +109,13 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
         if(restaurantRequest.getDistrict().length() >100){
             throw new ValidationException("El distrito no debe exceder los 100 caracteres");
+        }
+    }
+
+    @Override
+    public void existsRestaurantByName(RestaurantRequest restaurantRequest) {
+        if (restaurantRepository.existsByName(restaurantRequest.getName())) {
+            throw new ValidationException("Ya existe un restaurante con el nombre " + restaurantRequest.getName());
         }
     }
 }
