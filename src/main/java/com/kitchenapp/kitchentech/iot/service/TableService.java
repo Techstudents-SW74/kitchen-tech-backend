@@ -1,14 +1,14 @@
 package com.kitchenapp.kitchentech.iot.service;
 
-import com.kitchenapp.kitchentech.iot.model.Table;
+import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
 
 import java.util.List;
 
 public interface TableService {
-    public List<Table> getAllTables();
-    public Table getTableById(Long id);
-    public Table createTable(Table table);
+    public List<TableRestaurant> getAllTables();
+    public TableRestaurant getTableById(Long id);
+    public TableRestaurant createTable(TableRestaurant tableRestaurant);
     public void deleteTable(Long id);
-    public Table updateTable(Table table);
-    public void validateTable(Table table);
+    public TableRestaurant updateTable(TableRestaurant tableRestaurant);
+    public void validateTable(TableRestaurant tableRestaurant);
 }

@@ -6,15 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@jakarta.persistence.Table (name = "table")
-public class Table {
+@Table(name = "table_restaurant")
+public class TableRestaurant {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;

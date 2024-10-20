@@ -1,7 +1,6 @@
 package com.kitchenapp.kitchentech.iot.controller;
 
-import com.kitchenapp.kitchentech.business.model.Product;
-import com.kitchenapp.kitchentech.iot.model.Table;
+import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
 import com.kitchenapp.kitchentech.iot.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,7 @@ public class TableController {
     // Method: GET
     @Transactional(readOnly = true)
     @GetMapping
-    public ResponseEntity<List<Table>> getAllTables() {
+    public ResponseEntity<List<TableRestaurant>> getAllTables() {
         if (tableService.getAllTables().isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -36,7 +35,7 @@ public class TableController {
     // Method: GET
     @Transactional(readOnly = true)
     @GetMapping("/{tableId}")
-    public ResponseEntity<Table> getTableById(@PathVariable(name = "tableId") Long tableId) {
+    public ResponseEntity<TableRestaurant> getTableById(@PathVariable(name = "tableId") Long tableId) {
         if(tableService.getTableById(tableId) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -47,20 +46,20 @@ public class TableController {
     // Method: POST
     @Transactional
     @PostMapping
-    public ResponseEntity<Table> createTable(@RequestBody Table table) {
-        tableService.validateTable(table);
-        return new ResponseEntity<>(tableService.createTable(table), HttpStatus.CREATED);
+    public ResponseEntity<TableRestaurant> createTable(@RequestBody TableRestaurant tableRestaurant) {
+        tableService.validateTable(tableRestaurant);
+        return new ResponseEntity<>(tableService.createTable(tableRestaurant), HttpStatus.CREATED);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/table/{tableId}
     // Method: PUT
     @PutMapping("/{tableId}")
-    public ResponseEntity<Table> updateTable(@PathVariable(name = "tableId") Long tableId, @RequestBody Table table) {
+    public ResponseEntity<TableRestaurant> updateTable(@PathVariable(name = "tableId") Long tableId, @RequestBody TableRestaurant tableRestaurant) {
         if(tableService.getTableById(tableId) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        tableService.validateTable(table);
-        return new ResponseEntity<>(tableService.updateTable(table), HttpStatus.OK);
+        tableService.validateTable(tableRestaurant);
+        return new ResponseEntity<>(tableService.updateTable(tableRestaurant), HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/table/{tableId}
