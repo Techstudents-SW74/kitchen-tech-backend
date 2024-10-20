@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant,Long> {
     boolean existsById(Long id);
+    boolean existsByName(String name);
     List<Restaurant> findAll();
 }
