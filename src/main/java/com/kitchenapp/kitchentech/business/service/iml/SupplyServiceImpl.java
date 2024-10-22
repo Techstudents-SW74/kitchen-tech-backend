@@ -19,8 +19,8 @@ public class SupplyServiceImpl implements SupplyService {
     }
 
     @Override
-    public List<Supply> getAllSupplies(){
-        return supplyRepository.findAll();
+    public List<Supply> getAllSupplies(Long restaurantId){
+        return supplyRepository.findByRestaurantId(restaurantId);
     }
     @Override
     public Supply getSupplyById(Long id){

@@ -35,9 +35,9 @@ public class RestaurantController {
     // Method: POST
     @Transactional
     @PostMapping
-    public ResponseEntity<Restaurant> registerRestaurant(@RequestBody RestaurantRequest restaurantRequest) {
-        restaurantService.validateRestaurant(restaurantRequest);
-        Restaurant newRestaurant = restaurantService.createRestaurant(restaurantRequest);
+    public ResponseEntity<Restaurant> registerRestaurant(@RequestBody Restaurant restaurant) {
+        restaurantService.validateRestaurant(restaurant);
+        Restaurant newRestaurant = restaurantService.createRestaurant(restaurant);
         return new ResponseEntity<Restaurant>(newRestaurant, HttpStatus.CREATED);
     }
 
@@ -56,10 +56,9 @@ public class RestaurantController {
     // Method: PUT
     @Transactional
     @PutMapping("/{restaurantId}")
-    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable(name="restaurantId")Long restaurantId, @RequestBody RestaurantRequest restaurantRequest) {
+    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable(name="restaurantId")Long restaurantId, @RequestBody Restaurant restaurant) {
         restaurantService.existsRestaurantById(restaurantId);
-        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
-        restaurantService.validateRestaurant(restaurantRequest);
+        restaurantService.validateRestaurant(restaurant);
 
         Restaurant restaurantSaved = restaurantService.updateRestaurant(restaurant);
         return new ResponseEntity<Restaurant>(restaurantSaved,HttpStatus.OK);

@@ -23,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
+        validateOrder(order);
         return orderRepository.save(order);
     }
 
@@ -33,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order updateOrder(Order order) {
+        validateOrder(order);
         Order orderToUpdate = orderRepository.findById(order.getId()).orElse(null);
         if(orderToUpdate != null){
             orderToUpdate.setState(order.getState());

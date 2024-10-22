@@ -1,4 +1,14 @@
 package com.kitchenapp.kitchentech.business.repository;
 
-public interface ClientRepository {
+import com.kitchenapp.kitchentech.business.model.Client;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ClientRepository extends JpaRepository<Client,Long> {
+    boolean existsById(Long Id);
+    Boolean existsByDocument(String document);
+    List<Client> findByRestaurantId(Long restaurantId);
+    boolean existsByDocumentAndRestaurantId(String document, Long restaurantId);
+
 }

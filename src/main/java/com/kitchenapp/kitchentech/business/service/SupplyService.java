@@ -6,7 +6,7 @@ import com.kitchenapp.kitchentech.business.model.Supply;
 import java.util.List;
 
 public interface SupplyService {
-    public List<Supply> getAllSupplies();
+    public List<Supply> getAllSupplies(Long restaurantId);
     public Supply getSupplyById(Long id);
     public Supply createSupply(Supply supply);
     public void deleteSupply(Long id);
