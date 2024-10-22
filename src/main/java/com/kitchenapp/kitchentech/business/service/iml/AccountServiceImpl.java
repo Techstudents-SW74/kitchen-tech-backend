@@ -60,10 +60,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void validateAccount(Account account) {
-        if(account != null){
+        if(account == null){
             throw new ValidationException("La cuenta no puede ser nula");
         }
-        if(account.getOrder() != null){
+        if(account.getOrder() == null){
             throw new ValidationException("La orden de la cuenta no puede estar vacía");
         }
     }

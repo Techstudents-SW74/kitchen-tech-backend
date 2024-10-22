@@ -55,6 +55,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void validateOrder(Order order) {
+        if(order == null){
+          throw new ValidationException("La orden no puede ser nula");
+        }
         if(order.getProducts() == null){
             throw new ValidationException("La orden no tiene productos.");
         }

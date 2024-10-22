@@ -26,7 +26,7 @@ public class AccountController {
     // Method: GET
 
     @Transactional(readOnly = true)
-    @GetMapping("/restaurant/{restaurantId")
+    @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<List<Account>> getAllAccounts(@PathVariable(name="restaurantId")Long restaurantId){
         if(accountService.getAllAccounts(restaurantId).isEmpty()){
             return new ResponseEntity<List<Account>>(HttpStatus.NO_CONTENT);
