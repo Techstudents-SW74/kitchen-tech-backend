@@ -1,6 +1,5 @@
 package com.kitchenapp.kitchentech.business.service;
 
-import com.kitchenapp.kitchentech.business.model.Product;
 import com.kitchenapp.kitchentech.business.model.Supply;
 
 import java.util.List;
