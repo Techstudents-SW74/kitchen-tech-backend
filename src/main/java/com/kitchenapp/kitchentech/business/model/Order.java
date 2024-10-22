@@ -40,6 +40,9 @@ public class Order {
     @Column(name = "total_price",nullable = false)
     private Float totalPrice;
 
+    @Column(name = "restaurant_id", nullable = false)
+    private long restaurantId;
+
     // Método para calcular y actualizar el total
     private void updateTotalPrice() {
         this.totalPrice = (float) products.stream()

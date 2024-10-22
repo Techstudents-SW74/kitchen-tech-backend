@@ -1,6 +1,5 @@
 package com.kitchenapp.kitchentech.business.service.iml;
 
-import com.kitchenapp.kitchentech.authentication.model.RegisterRequest;
 import com.kitchenapp.kitchentech.business.model.Restaurant;
 import com.kitchenapp.kitchentech.business.model.RestaurantRequest;
 import com.kitchenapp.kitchentech.business.repository.RestaurantRepository;
@@ -20,7 +19,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant createRestaurant(RestaurantRequest restaurantRequest) {
+    public Restaurant createRestaurant(Restaurant restaurantRequest) {
 
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantRequest.getName())
@@ -79,7 +78,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void validateRestaurant(RestaurantRequest restaurantRequest) {
+    public void validateRestaurant(Restaurant restaurantRequest) {
         if(restaurantRequest.getName() ==  null || restaurantRequest.getName().isEmpty()){
             throw new ValidationException("El nombre del restaurante debe ser obligatorio");
         }

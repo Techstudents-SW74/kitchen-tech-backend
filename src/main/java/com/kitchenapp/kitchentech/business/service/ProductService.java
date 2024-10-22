@@ -5,7 +5,7 @@ import com.kitchenapp.kitchentech.business.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    public List<Product> getAllProducts();
+    public List<Product> getAllProducts(Long restaurantId);
     public Product getProductById(Long id);
     public Product createProduct(Product product);
     public void deleteProduct(Long id);

@@ -20,15 +20,15 @@ public class SupplyController {
         this.supplyService = supplyService;
     }
 
-    // URL: http://localhost:8080/api/kitchentech/v1/supply
+    // URL: http://localhost:8080/api/kitchentech/v1/supply/restaurant/{restaurantId}
     // Method: GET
     @Transactional(readOnly = true)
-    @GetMapping
-    public ResponseEntity<List<Supply>> getAllSupplies() {
-        if (supplyService.getAllSupplies().isEmpty()) {
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<List<Supply>> getAllSupplies(@PathVariable(name = "restaurantId") Long restaurantId) {
+        if (supplyService.getAllSupplies(restaurantId).isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(supplyService.getAllSupplies(), HttpStatus.OK);
+        return new ResponseEntity<>(supplyService.getAllSupplies(restaurantId), HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/supply/{supplyId}
