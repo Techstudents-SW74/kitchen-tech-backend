@@ -35,4 +35,7 @@ public class Supply {
 
     @Column (name = "estimated_daily_use", nullable = false)
     private Double estimatedDailyUse;
+
+    @Column(name = "restaurant_id", nullable = false)
+    private long restaurantId;
 }

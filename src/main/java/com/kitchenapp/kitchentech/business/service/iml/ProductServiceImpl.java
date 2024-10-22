@@ -19,8 +19,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts(){
-        return productRepository.findAll();
+    public List<Product> getAllProducts(Long restaurantId){
+        return productRepository.findByRestaurantId(restaurantId);
     }
     @Override
     public Product getProductById(Long id){
@@ -42,6 +42,7 @@ public class ProductServiceImpl implements ProductService{
             productToUpdate.setCategory(product.getCategory());
             productToUpdate.setProductImageUrl(product.getProductImageUrl());
             productToUpdate.setProductPrice(product.getProductPrice());
+            productToUpdate.setRestaurantId(product.getRestaurantId());
             return productRepository.save(productToUpdate);
         }
         else {

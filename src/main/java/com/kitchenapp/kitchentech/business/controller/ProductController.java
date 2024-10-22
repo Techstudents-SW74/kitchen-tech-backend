@@ -21,15 +21,15 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // URL: http://localhost:8080/api/kitchentech/v1/product
+    // URL: http://localhost:8080/api/kitchentech/v1/product/restaurant/{restaurantId}
     // Method: GET
     @Transactional(readOnly = true)
-    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        if (productService.getAllProducts().isEmpty()) {
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<List<Product>> getAllProducts(@PathVariable(name = "restaurantId") Long restaurantId) {
+        if (productService.getAllProducts(restaurantId).isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
+        return new ResponseEntity<>(productService.getAllProducts(restaurantId), HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/product/{productId}

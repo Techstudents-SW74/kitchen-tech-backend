@@ -19,7 +19,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant createRestaurant(RestaurantRequest restaurantRequest) {
+    public Restaurant createRestaurant(Restaurant restaurantRequest) {
 
         Restaurant restaurant = Restaurant.builder()
                 .name(restaurantRequest.getName())
@@ -78,7 +78,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void validateRestaurant(RestaurantRequest restaurantRequest) {
+    public void validateRestaurant(Restaurant restaurantRequest) {
         if(restaurantRequest.getName() ==  null || restaurantRequest.getName().isEmpty()){
             throw new ValidationException("El nombre del restaurante debe ser obligatorio");
         }
@@ -108,6 +108,13 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
         if(restaurantRequest.getDistrict().length() >100){
             throw new ValidationException("El distrito no debe exceder los 100 caracteres");
+        }
+    }
+
+    @Override
+    public void existsRestaurantByName(RestaurantRequest restaurantRequest) {
+        if (restaurantRepository.existsByName(restaurantRequest.getName())) {
+            throw new ValidationException("Ya existe un restaurante con el nombre " + restaurantRequest.getName());
         }
     }
 }
