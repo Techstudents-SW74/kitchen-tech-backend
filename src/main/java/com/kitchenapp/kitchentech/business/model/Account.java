@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.business.model;
 
+import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
 import com.kitchenapp.kitchentech.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,10 @@ public class Account {
     @JoinColumn(name = "order_id", nullable = true)
     private Order order;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "table_id", nullable = true)
+    private TableRestaurant table;
+
     @Column(name = "restaurant_id", nullable = false)
     private long restaurantId;
 
@@ -51,7 +56,5 @@ public class Account {
 
     @Column(name = "date_log",nullable = false)
     private LocalDate dateLog;
-
-    //falta mesas
 
 }
