@@ -29,7 +29,9 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/api/kitchentech/v1/auth/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                                .requestMatchers("/api/kitchentech/v1/users").authenticated()
+                                .requestMatchers("/api/kitchentech/v1/user","/api/kitchentech/v1/restaurant",
+                                        "api/kitchentech/v1/supply","api/kitchentech/v1/product","api/kitchentech/v1/client",
+                                        "api/kitchentech/v1/account","api/kitchentech/v1/table").authenticated()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManager ->
