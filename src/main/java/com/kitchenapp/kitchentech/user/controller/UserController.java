@@ -49,8 +49,19 @@ public class UserController {
     @PutMapping("/{userId}")
     public ResponseEntity<User> updateUserById(@PathVariable(name="userId")Long userId,@RequestBody UserDto user) {
         userService.existsUserById(userId);
-        User responseUser = userService.getUserById(userId);
         userService.validateUser(user);
+
+        User responseUser = new User();
+        responseUser.setId(userId);
+        responseUser.setFirstName(user.getFirstName());
+        responseUser.setLastName(user.getLastName());
+        responseUser.setUsername(user.getUsername());
+        responseUser.setEmail(user.getEmail());
+        responseUser.setBirthDate(user.getBirthDate());
+        responseUser.setPhoto(user.getPhoto());
+        responseUser.setPhone(user.getPhone());
+        responseUser.setRestaurant(user.getRestaurant());
+        responseUser.setRole(user.getRole());
 
         User userSaved = userService.updateUser(responseUser);
         return new ResponseEntity<User>(userSaved,HttpStatus.OK);

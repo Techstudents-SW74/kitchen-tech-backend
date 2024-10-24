@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
                 .birthDate(registerRequest.getBirthDate())
                 .phone(registerRequest.getPhone())
                 .photo(registerRequest.getPhoto())
-                .role(Role.USER)
+                .role(registerRequest.getRole())
                 .restaurant(registerRequest.getRestaurant())
                 .build();
         userRepository.save(user);
