@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     private long id;
     private String token;
+    private Long restaurantId;
 }

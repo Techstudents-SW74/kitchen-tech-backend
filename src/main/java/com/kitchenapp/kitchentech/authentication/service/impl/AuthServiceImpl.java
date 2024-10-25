@@ -58,9 +58,12 @@ public class AuthServiceImpl implements AuthService {
         UserDetails user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
         String token = jwtService.getToken(user);
         long id = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow().getId();
+        Long restaurantId = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow().getRestaurant() != null ? userRepository.findByUsername(loginRequest.getUsername()).orElseThrow().getRestaurant().getId() : null; // Agrega el ID del restaurante
+
         return AuthResponse.builder()
                 .token(token)
                 .id(id)
+                .restaurantId(restaurantId) // Agrega el ID del restaurante
                 .build();
     }
 
