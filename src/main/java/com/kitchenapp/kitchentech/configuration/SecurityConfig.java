@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRequest ->
                         authRequest
-                                .requestMatchers("/api/kitchentech/v1/auth/**").permitAll()
+                                .requestMatchers("/api/kitchentech/v1/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                                 .requestMatchers("/api/kitchentech/v1/user","/api/kitchentech/v1/restaurant",
                                         "api/kitchentech/v1/supply","api/kitchentech/v1/product","api/kitchentech/v1/client",
