@@ -37,11 +37,11 @@ public class UserServiceImpl implements UserService {
             userToUpdate.setFirstName(user.getFirstName());
             userToUpdate.setLastName(user.getLastName());
             userToUpdate.setEmail(user.getEmail());
-            userToUpdate.setPassword(user.getPassword());
             userToUpdate.setBirthDate(user.getBirthDate());
             userToUpdate.setPhoto(user.getPhoto());
             userToUpdate.setPhone(user.getPhone());
             userToUpdate.setRestaurant(user.getRestaurant());
+            userToUpdate.setRole(user.getRole());
             return userRepository.save(userToUpdate);
         }else{
             return null;
