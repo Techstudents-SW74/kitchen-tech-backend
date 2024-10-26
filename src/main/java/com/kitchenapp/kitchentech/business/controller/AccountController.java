@@ -1,8 +1,9 @@
 package com.kitchenapp.kitchentech.business.controller;
 
 import com.kitchenapp.kitchentech.business.model.Account;
+import com.kitchenapp.kitchentech.business.model.AccountProduct;
+import com.kitchenapp.kitchentech.business.service.AccountProductService;
 import com.kitchenapp.kitchentech.business.service.AccountService;
-import com.kitchenapp.kitchentech.business.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,72 +16,101 @@ import java.util.List;
 public class AccountController {
 
     private final AccountService accountService;
-    private final OrderService orderService;
+    private final AccountProductService accountProductService;
 
-    public AccountController(AccountService accountService, OrderService orderService){
+    public AccountController(AccountService accountService, AccountProductService accountProductService) {
         this.accountService = accountService;
-        this.orderService = orderService;
+        this.accountProductService = accountProductService;
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account/restaurant/{restaurantId}
     // Method: GET
-
     @Transactional(readOnly = true)
     @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<List<Account>> getAllAccounts(@PathVariable(name="restaurantId")Long restaurantId){
-        if(accountService.getAllAccounts(restaurantId).isEmpty()){
-            return new ResponseEntity<List<Account>>(HttpStatus.NO_CONTENT);
+        List<Account> accounts = accountService.getAllAccounts(restaurantId);
+        if(accounts.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Account>>(accountService.getAllAccounts(restaurantId),HttpStatus.OK);
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
     // Method: GET
-
     @Transactional(readOnly = true)
     @GetMapping("/{accountId}")
-    public ResponseEntity<Account> getAccountById(@PathVariable(name="accountId")Long accountId){
-        if(accountService.getAccountById(accountId) == null){
-            return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Account> getAccountById(@PathVariable(name = "accountId") Long accountId) {
+        Account account = accountService.getAccountById(accountId);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Account>(accountService.getAccountById(accountId),HttpStatus.OK);
+        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account
     // Method: POST
-
     @Transactional
     @PostMapping
-    public ResponseEntity<Account> createAccount(@RequestBody Account account){
-        orderService.createOrder(account.getOrder());
-        return new ResponseEntity<Account>(accountService.createAccount(account),HttpStatus.CREATED);
+    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
+        account.updateTotalAccount();  // Calcula el total antes de guardar la cuenta
+        Account createdAccount = accountService.createAccount(account);
+        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
     // Method: PUT
+    @Transactional
     @PutMapping("/{accountId}")
-    public ResponseEntity<Account> updateAccount(@PathVariable(name="accountId")Long accountId,@RequestBody Account account){
-        if(accountService.getAccountById(accountId)==null){
-            return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Account> updateAccount(@PathVariable(name = "accountId") Long accountId, @RequestBody Account account) {
+        if (accountService.getAccountById(accountId) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        orderService.updateOrder(account.getOrder());
-        return new ResponseEntity<Account>(accountService.updateAccount(account),HttpStatus.OK);
+        // Actualiza el total basado en la lista de AccountProduct del request
+        account.updateTotalAccount();
+        Account updatedAccount = accountService.updateAccount(account);
+        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
     // Method: DELETE
     @DeleteMapping("/{accountId}")
-    public ResponseEntity<String> deleteAccount(@PathVariable(name="accountId")Long accountId){
-
-        Account account = accountService.getAccountById(accountId);
-
-        if(account == null){
-            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> deleteAccount(@PathVariable(name = "accountId") Long accountId) {
+        if (accountService.getAccountById(accountId) == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        orderService.deleteOrder(account.getOrder().getId());
         accountService.deleteAccount(accountId);
+        return new ResponseEntity<>("Account deleted successfully", HttpStatus.OK);
+    }
 
-        return new ResponseEntity<String>("Account deleted successfully",HttpStatus.OK);
+    // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
+    // Method: POST
+    @PostMapping("/{accountId}/products")
+    public ResponseEntity<AccountProduct> addProductToAccount(@PathVariable(name = "accountId") Long accountId,
+                                                              @RequestBody AccountProduct accountProduct) {
+        Account account = accountService.getAccountById(accountId);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        accountProduct.setAccount(account); // Asociar el producto a la cuenta
+        accountProductService.addAccountProduct(accountProduct); // Llamar al servicio
+        return new ResponseEntity<>(accountProduct, HttpStatus.CREATED);
+    }
+
+    // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
+    // Method: PUT
+    @PutMapping("/{accountId}/products/{productId}")
+    public ResponseEntity<AccountProduct> updateProductInAccount(@PathVariable(name = "accountId") Long accountId,
+                                                                 @PathVariable(name = "productId") Long productId,
+                                                                 @RequestBody AccountProduct accountProduct) {
+        Account account = accountService.getAccountById(accountId);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        AccountProduct updatedProduct = accountProductService.updateAccountProduct(accountId, productId, accountProduct);
+        if (updatedProduct == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 }

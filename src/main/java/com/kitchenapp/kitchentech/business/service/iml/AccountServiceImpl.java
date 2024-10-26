@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository){
+    public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
@@ -29,28 +32,27 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(Account account) {
+        // Actualiza el total antes de guardar la cuenta por primera vez
+        account.updateTotalAccount();
         return accountRepository.save(account);
     }
 
     @Override
     public Account updateAccount(Account account) {
-
         Account accountToUpdate = getAccountById(account.getId());
-        if(accountToUpdate != null){
+        if (accountToUpdate != null) {
             accountToUpdate.setClient(account.getClient());
-            accountToUpdate.setOrder(account.getOrder());
             accountToUpdate.setRestaurantId(account.getRestaurantId());
             accountToUpdate.setTable(account.getTable());
             accountToUpdate.setState(account.getState());
-            accountToUpdate.setTotalGuests(account.getTotalGuests());
-            accountToUpdate.setTotalAccount(account.getTotalAccount());
             accountToUpdate.setDateCreated(account.getDateCreated());
             accountToUpdate.setDateLog(account.getDateLog());
+            accountToUpdate.setProducts(account.getProducts());
+            accountToUpdate.updateTotalAccount();
+
             return accountRepository.save(accountToUpdate);
         }
-        else{
-            return null;
-        }
+        return null;
     }
 
     @Override
