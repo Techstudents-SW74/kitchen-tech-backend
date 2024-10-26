@@ -2,6 +2,7 @@ package com.kitchenapp.kitchentech.business.controller;
 
 import com.kitchenapp.kitchentech.business.model.Supply;
 import com.kitchenapp.kitchentech.business.service.SupplyService;
+import com.kitchenapp.kitchentech.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,14 @@ public class SupplyController {
     @Transactional
     @PostMapping
     public ResponseEntity<Supply> createSupply(@RequestBody Supply supply) {
-        return new ResponseEntity<>(supplyService.createSupply(supply), HttpStatus.CREATED);
+        try {
+            supplyService.existsSupplyByName(supply);
+            Supply createdSupply = supplyService.createSupply(supply);
+            return new ResponseEntity<>(createdSupply, HttpStatus.CREATED);
+        } catch (ValidationException e) {
+            supplyService.existsSupplyByName(supply);
+            return new ResponseEntity<>(supplyService.createSupply(supply), HttpStatus.BAD_REQUEST);
+        }
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/supply/{supplyId}
