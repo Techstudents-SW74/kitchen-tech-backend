@@ -36,7 +36,7 @@ public class Account {
     private TableRestaurant table;
 
     @Column(name = "restaurant_id", nullable = false)
-    private long restaurantId;
+    private Long restaurantId;
 
     @Column(name="state",nullable = false)
     private State state;
@@ -44,14 +44,16 @@ public class Account {
     @Column(name = "total_account",nullable = false)
     private Float totalAccount;
 
+    @Column(name = "total_guests",nullable = false)
+    private Integer totalGuests;
+
     @Column(name = "date_created",nullable = false)
     private LocalDateTime dateCreated;
 
     @Column(name = "date_log",nullable = false)
     private LocalDateTime dateLog;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "account_products", joinColumns = @JoinColumn(name = "account_id"))
+    @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AccountProduct> products = new ArrayList<>();
 
     public void updateTotalAccount() {

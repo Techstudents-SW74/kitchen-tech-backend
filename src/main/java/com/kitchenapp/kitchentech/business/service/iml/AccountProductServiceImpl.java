@@ -33,7 +33,7 @@ public class AccountProductServiceImpl implements AccountProductService {
 
         // Buscar el producto en la cuenta
         AccountProduct existingProduct = accountProductRepository.findById(productId).orElse(null);
-        if (existingProduct == null || !existingProduct.getAccount().getId().equals(accountId)) {
+        if (existingProduct == null || !existingProduct.getAccountId().equals(accountId)) {
             return null; // O lanzar una excepción
         }
 
@@ -45,4 +45,7 @@ public class AccountProductServiceImpl implements AccountProductService {
 
         return accountProductRepository.save(existingProduct);
     }
+
+    @Transactional
+    public ProductAccount
 }

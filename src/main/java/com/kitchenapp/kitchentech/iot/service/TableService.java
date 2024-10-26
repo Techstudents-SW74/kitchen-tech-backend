@@ -10,5 +10,4 @@ public interface TableService {
     public TableRestaurant createTable(TableRestaurant tableRestaurant);
     public void deleteTable(Long id);
     public TableRestaurant updateTable(TableRestaurant tableRestaurant);
-    public void validateTable(TableRestaurant tableRestaurant);
 }

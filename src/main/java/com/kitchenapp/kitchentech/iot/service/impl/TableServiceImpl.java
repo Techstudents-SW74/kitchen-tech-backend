@@ -42,35 +42,11 @@ public class TableServiceImpl implements TableService {
             tableRestaurantToUpdate.setTableCapacity(tableRestaurant.getTableCapacity());
             tableRestaurantToUpdate.setTableNumber(tableRestaurant.getTableNumber());
             tableRestaurantToUpdate.setTableStatus(tableRestaurant.getTableStatus());
-            tableRestaurantToUpdate.setRestaurant(tableRestaurant.getRestaurant());
+            tableRestaurantToUpdate.setRestaurantId(tableRestaurant.getRestaurantId());
             return tableRespository.save(tableRestaurantToUpdate);
         }
         else {
             return null;
-        }
-    }
-
-    @Override
-    public void validateTable(TableRestaurant tableRestaurant) {
-        if(tableRestaurant == null){
-            throw new IllegalArgumentException("La mesa no puede ser nula");
-        }
-        if(tableRestaurant.getTableCapacity() == null || tableRestaurant.getTableCapacity() <= 0){
-            throw new IllegalArgumentException("La mesa es obligatoria y debe ser mayor a 0");
-        }
-        if(tableRestaurant.getTableStatus() == null || tableRestaurant.getTableStatus().isEmpty()){
-            throw new IllegalArgumentException("El estado de la mesa es obligatorio");
-        }
-        if(!tableRestaurant.getTableStatus().equals("available") &&
-                !tableRestaurant.getTableStatus().equals("occupied") &&
-                !tableRestaurant.getTableStatus().equals("need cleaning")) {
-            throw new IllegalArgumentException("La mesa debe tener un estado válido(available, occupied, need cleaning)");
-        }
-        if(tableRestaurant.getTableNumber() == null || tableRestaurant.getTableNumber() <= 0){
-            throw new IllegalArgumentException("El número de la mesa no debe ser nulo y debe ser mayor a 0");
-        }
-        if(tableRestaurant.getRestaurant() == null) {
-            throw new IllegalArgumentException("La mesa debe estar sujeto a un restaurante");
         }
     }
 }

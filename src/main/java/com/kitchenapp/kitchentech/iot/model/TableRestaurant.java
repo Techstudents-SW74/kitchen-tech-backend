@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.iot.model;
 
+import com.kitchenapp.kitchentech.iot.Enums.Status;
 import com.kitchenapp.kitchentech.user.model.Restaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,9 +24,8 @@ public class TableRestaurant {
     private Long tableCapacity;
 
     @Column(name = "table_status", length = 250)
-    private String tableStatus;
+    private Status tableStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = true)
-    private Restaurant restaurant;
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Long restaurantId;
 }

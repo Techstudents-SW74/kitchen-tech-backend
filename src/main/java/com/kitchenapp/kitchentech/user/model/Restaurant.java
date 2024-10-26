@@ -3,6 +3,7 @@ package com.kitchenapp.kitchentech.user.model;
 import com.kitchenapp.kitchentech.business.model.Client;
 import com.kitchenapp.kitchentech.business.model.Product;
 import com.kitchenapp.kitchentech.business.model.Supply;
+import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
 import com.kitchenapp.kitchentech.user.Enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -63,6 +64,9 @@ public class Restaurant implements UserDetails {
 
     @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<StaffUser> staffUsers;
+
+    @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<TableRestaurant> tables;
 
     @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Client> clients ;

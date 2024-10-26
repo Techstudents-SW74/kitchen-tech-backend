@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.business.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,11 +8,12 @@ import lombok.Data;
 @Entity
 @Table(name = "account_products")
 public class AccountProduct {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "products_id", nullable = false)
     private Long productId;
 
     @Column(name = "product_name", nullable = false)
@@ -23,7 +25,6 @@ public class AccountProduct {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
+    private Long accountId;
 }

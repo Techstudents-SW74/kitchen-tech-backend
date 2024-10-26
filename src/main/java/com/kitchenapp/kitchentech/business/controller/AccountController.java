@@ -1,9 +1,12 @@
 package com.kitchenapp.kitchentech.business.controller;
 
+import com.kitchenapp.kitchentech.business.Dto.AccountProductDto;
 import com.kitchenapp.kitchentech.business.model.Account;
 import com.kitchenapp.kitchentech.business.model.AccountProduct;
+import com.kitchenapp.kitchentech.business.model.Product;
 import com.kitchenapp.kitchentech.business.service.AccountProductService;
 import com.kitchenapp.kitchentech.business.service.AccountService;
+import com.kitchenapp.kitchentech.business.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +20,12 @@ public class AccountController {
 
     private final AccountService accountService;
     private final AccountProductService accountProductService;
+    private final ProductService productService;
 
-    public AccountController(AccountService accountService, AccountProductService accountProductService) {
+    public AccountController(AccountService accountService, AccountProductService accountProductService, ProductService productService) {
         this.accountService = accountService;
         this.accountProductService = accountProductService;
+        this.productService = productService;
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account/restaurant/{restaurantId}
@@ -86,15 +91,38 @@ public class AccountController {
     // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
     // Method: POST
     @PostMapping("/{accountId}/products")
-    public ResponseEntity<AccountProduct> addProductToAccount(@PathVariable(name = "accountId") Long accountId,
-                                                              @RequestBody AccountProduct accountProduct) {
+    public ResponseEntity<AccountProductDto> addProductToAccount(
+            @PathVariable(name = "accountId") Long accountId,
+            @RequestBody AccountProduct accountProduct) {
+
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        accountProduct.setAccount(account); // Asociar el producto a la cuenta
-        accountProductService.addAccountProduct(accountProduct); // Llamar al servicio
-        return new ResponseEntity<>(accountProduct, HttpStatus.CREATED);
+
+        // Obtener detalles del producto basado en productId
+        Product product = productService.getProductByRestaurantProductId(accountProduct.getProductId());
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Completar los detalles necesarios
+        accountProduct.setPrice(product.getProductPrice());
+        accountProduct.setProductName(product.getProductName());
+        accountProduct.setAccountId(accountId);
+
+        accountProductService.addAccountProduct(accountProduct);
+
+        // Crear el DTO para la respuesta
+        AccountProductDto responseDto = new AccountProductDto();
+        responseDto.setId(accountProduct.getId());
+        responseDto.setProductId(accountProduct.getProductId());
+        responseDto.setProductName(accountProduct.getProductName());
+        responseDto.setPrice(accountProduct.getPrice());
+        responseDto.setQuantity(accountProduct.getQuantity());
+        responseDto.setAccountId(account.getId());
+
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
@@ -112,5 +140,12 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{accountId}/products/{productId}")
+    public ResponseEntity<AccountProduct> deleteProductInAccount(@PathVariable(name = "accountId") Long accountId,
+                                                                 @PathVariable(name = "productId") Long productId,
+                                                                 @RequestBody AccountProduct accountProduct) {
+        if(accountProductService.getProductAccountById)
     }
 }

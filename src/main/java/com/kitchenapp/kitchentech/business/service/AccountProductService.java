@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface AccountProductService {
     void addAccountProduct(AccountProduct accountProduct);
+    AccountProduct getAccountProductById(Long id);
     AccountProduct updateAccountProduct(Long accountId, Long productId, AccountProduct updatedAccountProduct);
 }

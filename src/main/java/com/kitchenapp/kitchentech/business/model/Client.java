@@ -29,5 +29,5 @@ public class Client {
     private String document;
 
     @Column(name = "restaurant_id", nullable = false)
-    private long restaurantId;
+    private Long restaurantId;
 }
