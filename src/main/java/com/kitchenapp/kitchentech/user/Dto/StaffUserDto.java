@@ -1,5 +1,6 @@
-package com.kitchenapp.kitchentech.user.model;
+package com.kitchenapp.kitchentech.user.Dto;
 
+import com.kitchenapp.kitchentech.user.Enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

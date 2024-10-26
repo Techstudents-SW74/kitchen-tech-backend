@@ -1,6 +1,6 @@
-package com.kitchenapp.kitchentech.user.model;
+package com.kitchenapp.kitchentech.user.Dto;
 
-import jakarta.persistence.*;
+import com.kitchenapp.kitchentech.user.model.StaffUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.user.model;
 
+import com.kitchenapp.kitchentech.user.Enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

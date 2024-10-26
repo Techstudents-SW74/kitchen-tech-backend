@@ -1,7 +1,7 @@
 package com.kitchenapp.kitchentech.user.controller;
 
 import com.kitchenapp.kitchentech.user.model.StaffUser;
-import com.kitchenapp.kitchentech.user.model.StaffUserDto;
+import com.kitchenapp.kitchentech.user.Dto.StaffUserDto;
 import com.kitchenapp.kitchentech.user.service.StaffUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

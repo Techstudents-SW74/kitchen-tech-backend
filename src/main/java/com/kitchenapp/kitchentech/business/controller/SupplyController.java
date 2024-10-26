@@ -47,7 +47,6 @@ public class SupplyController {
     @Transactional
     @PostMapping
     public ResponseEntity<Supply> createSupply(@RequestBody Supply supply) {
-        supplyService.validateSupply(supply);
         return new ResponseEntity<>(supplyService.createSupply(supply), HttpStatus.CREATED);
     }
 
@@ -58,7 +57,6 @@ public class SupplyController {
         if(supplyService.getSupplyById(supplyId) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        supplyService.validateSupply(supply);
         return new ResponseEntity<>(supplyService.updateSupply(supply), HttpStatus.OK);
     }
 

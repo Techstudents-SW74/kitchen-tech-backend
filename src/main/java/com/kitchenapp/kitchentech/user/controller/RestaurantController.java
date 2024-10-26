@@ -1,8 +1,8 @@
 package com.kitchenapp.kitchentech.user.controller;
 
 import com.kitchenapp.kitchentech.user.model.Restaurant;
-import com.kitchenapp.kitchentech.user.model.RestaurantDto;
-import com.kitchenapp.kitchentech.user.model.Role;
+import com.kitchenapp.kitchentech.user.Dto.RestaurantDto;
+import com.kitchenapp.kitchentech.user.Enums.Role;
 import com.kitchenapp.kitchentech.user.service.RestaurantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

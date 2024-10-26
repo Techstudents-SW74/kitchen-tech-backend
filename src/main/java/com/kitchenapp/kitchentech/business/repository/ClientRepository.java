@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ClientRepository extends JpaRepository<Client,Long> {
     boolean existsById(Long Id);
-    Boolean existsByDocument(String document);
+    boolean existsByDocument(String document);
     List<Client> findByRestaurantId(Long restaurantId);
     boolean existsByDocumentAndRestaurantId(String document, Long restaurantId);
 

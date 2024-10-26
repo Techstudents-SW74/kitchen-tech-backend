@@ -10,5 +10,4 @@ public interface SupplyService {
     public Supply createSupply(Supply supply);
     public void deleteSupply(Long id);
     public Supply updateSupply(Supply supply);
-    public void validateSupply(Supply supply);
 }

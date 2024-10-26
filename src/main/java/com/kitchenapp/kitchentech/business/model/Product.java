@@ -1,6 +1,6 @@
 package com.kitchenapp.kitchentech.business.model;
 
-import com.kitchenapp.kitchentech.user.model.Restaurant;
+import com.kitchenapp.kitchentech.business.Dto.SupplyDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

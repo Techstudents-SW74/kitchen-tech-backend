@@ -1,7 +1,7 @@
 package com.kitchenapp.kitchentech.business.controller;
 
 import com.kitchenapp.kitchentech.business.model.Product;
-import com.kitchenapp.kitchentech.business.model.ProductDto;
+import com.kitchenapp.kitchentech.business.Dto.ProductDto;
 import com.kitchenapp.kitchentech.business.repository.ProductRepository;
 import com.kitchenapp.kitchentech.business.service.ProductService;
 import com.kitchenapp.kitchentech.exception.ResourceNotFoundException;

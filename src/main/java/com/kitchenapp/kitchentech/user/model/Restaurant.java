@@ -1,7 +1,9 @@
 package com.kitchenapp.kitchentech.user.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kitchenapp.kitchentech.business.model.Client;
 import com.kitchenapp.kitchentech.business.model.Product;
+import com.kitchenapp.kitchentech.business.model.Supply;
+import com.kitchenapp.kitchentech.user.Enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,7 +59,13 @@ public class Restaurant implements UserDetails {
     private List<Product> products;
 
     @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Supply> supplies;
+
+    @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<StaffUser> staffUsers;
+
+    @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Client> clients ;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,7 +1,6 @@
 package com.kitchenapp.kitchentech.user.service;
 
 import com.kitchenapp.kitchentech.user.model.StaffUser;
-import com.kitchenapp.kitchentech.user.model.StaffUserDto;
 
 import java.util.List;
 

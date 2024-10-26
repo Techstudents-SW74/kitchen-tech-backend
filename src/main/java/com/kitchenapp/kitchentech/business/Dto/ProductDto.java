@@ -1,4 +1,4 @@
-package com.kitchenapp.kitchentech.business.model;
+package com.kitchenapp.kitchentech.business.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
