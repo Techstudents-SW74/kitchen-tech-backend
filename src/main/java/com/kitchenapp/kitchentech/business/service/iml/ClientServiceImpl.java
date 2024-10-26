@@ -33,11 +33,7 @@ public class ClientServiceImpl implements ClientService {
         if(clientToUpdate!=null){
             clientToUpdate.setName(client.getName());
             clientToUpdate.setDocument(client.getDocument());
-            clientToUpdate.setEmail(client.getEmail());
-            clientToUpdate.setPhone(client.getPhone());
             clientToUpdate.setType_document(clientToUpdate.getType_document());
-            clientToUpdate.setBirthDate(client.getBirthDate());
-            clientToUpdate.setPhone(client.getPhone());
             return clientRepository.save(clientToUpdate);
         }
         else{

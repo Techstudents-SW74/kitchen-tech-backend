@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.business.model;
 
+import com.kitchenapp.kitchentech.user.model.Restaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,10 +31,10 @@ public class Product {
     @Column(name = "category", nullable = false, length = 50)
     private String category;
 
-    @Column(name = "restaurant_id", nullable = false)
-    private long restaurantId;
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Long restaurantId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "product_supplies", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "supplies")
     private List<SupplyDTO> supplies = new ArrayList<>();
