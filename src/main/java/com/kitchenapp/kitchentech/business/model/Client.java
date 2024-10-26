@@ -26,17 +26,11 @@ public class Client {
     @Column(name = "name",  nullable = false, length = 150)
     private String name;
 
+    @Column(name = "lastname",  nullable = false, length = 150)
+    private String lastname;
+
     @Column(name = "type_document", nullable = true)
     private String type_document;
-
-    @Column(name="email", nullable = true, length = 200)
-    private String email;
-
-    @Column(name="phone", nullable = true, length = 20)
-    private String phone;
-
-    @Column(name="birth_date", nullable = true)
-    private LocalDate birthDate;
 
     @Column(name = "restaurant_id", nullable = false)
     private long restaurantId;

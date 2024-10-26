@@ -1,6 +1,6 @@
 package com.kitchenapp.kitchentech.iot.model;
 
-import com.kitchenapp.kitchentech.business.model.Restaurant;
+import com.kitchenapp.kitchentech.user.model.Restaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

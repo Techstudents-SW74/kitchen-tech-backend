@@ -53,7 +53,6 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<Account> createAccount(@RequestBody Account account){
         orderService.createOrder(account.getOrder());
-        accountService.validateAccount(account);
         return new ResponseEntity<Account>(accountService.createAccount(account),HttpStatus.CREATED);
     }
 
@@ -66,7 +65,6 @@ public class AccountController {
         }
 
         orderService.updateOrder(account.getOrder());
-        accountService.validateAccount(account);
         return new ResponseEntity<Account>(accountService.updateAccount(account),HttpStatus.OK);
     }
 

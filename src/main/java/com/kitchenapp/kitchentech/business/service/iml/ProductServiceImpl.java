@@ -2,7 +2,6 @@ package com.kitchenapp.kitchentech.business.service.iml;
 
 
 import com.kitchenapp.kitchentech.business.model.Product;
-import com.kitchenapp.kitchentech.business.model.Restaurant;
 import com.kitchenapp.kitchentech.business.repository.ProductRepository;
 import com.kitchenapp.kitchentech.business.service.ProductService;
 import org.springframework.stereotype.Service;

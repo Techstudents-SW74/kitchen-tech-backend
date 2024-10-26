@@ -1,7 +1,7 @@
 package com.kitchenapp.kitchentech.business.model;
 
 import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
-import com.kitchenapp.kitchentech.user.model.User;
+import com.kitchenapp.kitchentech.user.model.Restaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +22,6 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = true)
-    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", nullable = true)

@@ -10,5 +10,4 @@ public interface AccountService {
     public abstract Account createAccount(Account account);
     public abstract Account updateAccount(Account account);
     public abstract void deleteAccount(Long id);
-    public void validateAccount(Account account);
 }

@@ -1,10 +1,9 @@
-package com.kitchenapp.kitchentech.business.controller;
+package com.kitchenapp.kitchentech.user.controller;
 
-import com.kitchenapp.kitchentech.authentication.model.AuthResponse;
-import com.kitchenapp.kitchentech.authentication.model.RegisterRequest;
-import com.kitchenapp.kitchentech.business.model.Restaurant;
-import com.kitchenapp.kitchentech.business.model.RestaurantRequest;
-import com.kitchenapp.kitchentech.business.service.RestaurantService;
+import com.kitchenapp.kitchentech.user.model.Restaurant;
+import com.kitchenapp.kitchentech.user.model.RestaurantDto;
+import com.kitchenapp.kitchentech.user.model.Role;
+import com.kitchenapp.kitchentech.user.service.RestaurantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +35,6 @@ public class RestaurantController {
     @Transactional
     @PostMapping
     public ResponseEntity<Restaurant> registerRestaurant(@RequestBody Restaurant restaurant) {
-        restaurantService.validateRestaurant(restaurant);
         Restaurant newRestaurant = restaurantService.createRestaurant(restaurant);
         return new ResponseEntity<Restaurant>(newRestaurant, HttpStatus.CREATED);
     }
@@ -56,11 +54,35 @@ public class RestaurantController {
     // Method: PUT
     @Transactional
     @PutMapping("/{restaurantId}")
-    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable(name="restaurantId")Long restaurantId, @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> updateRestaurantById(@PathVariable(name="restaurantId") Long restaurantId, @RequestBody RestaurantDto restaurantDTO) {
         restaurantService.existsRestaurantById(restaurantId);
-        restaurantService.validateRestaurant(restaurant);
+
+        // Mapeo manual del DTO a la entidad
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(restaurantId);
+        restaurant.setUsername(restaurantDTO.getUsername());
+        restaurant.setPassword(restaurantDTO.getPassword());
+        restaurant.setName(restaurantDTO.getName());
+        restaurant.setPhone(restaurantDTO.getPhone());
+        restaurant.setEmail(restaurantDTO.getEmail());
+        restaurant.setImage(restaurantDTO.getImage());
+        restaurant.setCity(restaurantDTO.getCity());
+        restaurant.setDistrict(restaurantDTO.getDistrict());
+
+        // Convertir el String a Role
+        restaurant.setRole(Role.valueOf(restaurantDTO.getRole().toUpperCase()));
 
         Restaurant restaurantSaved = restaurantService.updateRestaurant(restaurant);
-        return new ResponseEntity<Restaurant>(restaurantSaved,HttpStatus.OK);
+        return new ResponseEntity<>(restaurantSaved, HttpStatus.OK);
+    }
+
+    // URL: http://localhost:8080/api/kitchentech/v1/restaurant/{restaurantId}
+    // Method: DELETE
+    @Transactional
+    @DeleteMapping("/{restaurantId}")
+    public ResponseEntity<Restaurant> deleteRestaurantById(@PathVariable(name="restaurantId") Long restaurantId) {
+        restaurantService.existsRestaurantById(restaurantId);
+        restaurantService.deleteRestaurant(restaurantId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
