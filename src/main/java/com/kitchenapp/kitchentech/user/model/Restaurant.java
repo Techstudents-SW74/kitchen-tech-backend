@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.user.model;
 
+import com.kitchenapp.kitchentech.business.model.Account;
 import com.kitchenapp.kitchentech.business.model.Client;
 import com.kitchenapp.kitchentech.business.model.Product;
 import com.kitchenapp.kitchentech.business.model.Supply;
@@ -70,6 +71,9 @@ public class Restaurant implements UserDetails {
 
     @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Client> clients ;
+
+    @OneToMany(mappedBy = "restaurantId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Account> accounts;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

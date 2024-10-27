@@ -37,6 +37,7 @@ public class AccountController {
         if(accounts.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
@@ -49,6 +50,7 @@ public class AccountController {
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
@@ -100,52 +102,66 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Obtener detalles del producto basado en productId
+        // Obtén el producto correspondiente para obtener el precio
         Product product = productService.getProductByRestaurantProductId(accountProduct.getProductId());
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        // Completar los detalles necesarios
-        accountProduct.setPrice(product.getProductPrice());
-        accountProduct.setProductName(product.getProductName());
-        accountProduct.setAccountId(accountId);
+        // Llama a accountProductService para manejar la adición o actualización
+        AccountProduct updatedProduct = accountProductService.addOrUpdateAccountProduct(account, accountProduct);
 
-        accountProductService.addAccountProduct(accountProduct);
+        if (updatedProduct == null) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-        // Crear el DTO para la respuesta
+        // Generar el DTO de respuesta basado en el estado actualizado
         AccountProductDto responseDto = new AccountProductDto();
-        responseDto.setId(accountProduct.getId());
-        responseDto.setProductId(accountProduct.getProductId());
-        responseDto.setProductName(accountProduct.getProductName());
-        responseDto.setPrice(accountProduct.getPrice());
-        responseDto.setQuantity(accountProduct.getQuantity());
-        responseDto.setAccountId(account.getId());
+        responseDto.setQuantity(updatedProduct.getQuantity());
+        responseDto.setPrice(updatedProduct.getPrice());
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+
     // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
     // Method: PUT
     @PutMapping("/{accountId}/products/{productId}")
-    public ResponseEntity<AccountProduct> updateProductInAccount(@PathVariable(name = "accountId") Long accountId,
-                                                                 @PathVariable(name = "productId") Long productId,
-                                                                 @RequestBody AccountProduct accountProduct) {
+    public ResponseEntity<AccountProduct> updateProductInAccount(
+            @PathVariable(name = "accountId") Long accountId,
+            @PathVariable(name = "productId") Long productId,
+            @RequestBody AccountProduct accountProduct) {
+
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         AccountProduct updatedProduct = accountProductService.updateAccountProduct(accountId, productId, accountProduct);
         if (updatedProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
+
     @DeleteMapping("/{accountId}/products/{productId}")
-    public ResponseEntity<AccountProduct> deleteProductInAccount(@PathVariable(name = "accountId") Long accountId,
-                                                                 @PathVariable(name = "productId") Long productId,
-                                                                 @RequestBody AccountProduct accountProduct) {
-        if(accountProductService.getProductAccountById)
+    public ResponseEntity<Void> deleteProductInAccount(@PathVariable(name = "accountId") Long accountId,
+                                                       @PathVariable(name = "productId") Long productId) {
+        // Verifica si el producto existe para la cuenta
+        AccountProduct accountProduct = accountProductService.getAccountProductByAccountAndProductId(accountId, productId);
+        if (accountProduct == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Elimina el producto de la cuenta
+        accountProductService.deleteAccountProduct(accountProduct.getId());
+
+        Account account = accountService.getAccountById(accountId);
+        account.updateTotalAccount();
+        accountService.updateAccount(account);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

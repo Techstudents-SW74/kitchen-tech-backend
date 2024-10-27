@@ -1,6 +1,5 @@
 package com.kitchenapp.kitchentech.business.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
