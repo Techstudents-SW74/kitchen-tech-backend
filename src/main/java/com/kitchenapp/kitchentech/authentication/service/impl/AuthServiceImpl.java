@@ -89,7 +89,8 @@ public class AuthServiceImpl implements AuthService {
 
         UserDetails user;
         Long id;
-        Long restaurantId = null;
+        Long restaurantId;
+        String role;
 
         // Verificar si el usuario es un Staff
         var staffUserOpt = staffUserRepository.findByUsername(loginRequest.getUsername());
@@ -97,6 +98,7 @@ public class AuthServiceImpl implements AuthService {
             user = staffUserOpt.get();
             id = staffUserOpt.get().getId();
             restaurantId = staffUserOpt.get().getRestaurantId();
+            role = staffUserOpt.get().getRole().toString();
 
         } else {
             // Verificar si el usuario es un Restaurante
@@ -104,6 +106,8 @@ public class AuthServiceImpl implements AuthService {
             if (restaurantOpt.isPresent()) {
                 user = restaurantOpt.get();
                 id = restaurantOpt.get().getId();
+                restaurantId = id;
+                role = restaurantOpt.get().getRole().toString();
             } else {
                 throw new ValidationException("User not found");
             }
@@ -114,6 +118,7 @@ public class AuthServiceImpl implements AuthService {
                 .token(token)
                 .id(id)
                 .restaurantId(restaurantId) // ID del restaurante, si es staff
+                .role(role)
                 .build();
     }
 
