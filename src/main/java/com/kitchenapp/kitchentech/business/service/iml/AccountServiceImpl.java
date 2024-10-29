@@ -41,6 +41,7 @@ public class AccountServiceImpl implements AccountService {
     public Account updateAccount(Account account) {
         Account accountToUpdate = getAccountById(account.getId());
         if (accountToUpdate != null) {
+            accountToUpdate.setAccountName(account.getAccountName());
             accountToUpdate.setClient(account.getClient());
             accountToUpdate.setRestaurantId(account.getRestaurantId());
             accountToUpdate.setTable(account.getTable());
