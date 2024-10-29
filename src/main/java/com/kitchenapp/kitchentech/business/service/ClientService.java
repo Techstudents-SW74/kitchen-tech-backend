@@ -12,6 +12,4 @@ public interface ClientService {
     public abstract List<Client> getAllClients(Long restaurantId);
     public void existsClientById(Long id);
     public void existsClientByDocument(Client client);
-    public void validateClient(Client client);
-
 }

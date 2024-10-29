@@ -1,4 +1,4 @@
-package com.kitchenapp.kitchentech.business.model;
+package com.kitchenapp.kitchentech.business.Dto;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

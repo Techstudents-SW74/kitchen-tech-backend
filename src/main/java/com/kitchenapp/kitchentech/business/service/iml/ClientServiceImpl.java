@@ -13,7 +13,7 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
 
-    public ClientServiceImpl(ClientRepository clientRepository){
+    public ClientServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
@@ -30,17 +30,12 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client updateClient(Client client) {
         Client clientToUpdate = getClientById(client.getId());
-        if(clientToUpdate!=null){
-            clientToUpdate.setName(client.getName());
+        if (clientToUpdate != null) {
+            clientToUpdate.setFullName(client.getFullName());
             clientToUpdate.setDocument(client.getDocument());
-            clientToUpdate.setEmail(client.getEmail());
-            clientToUpdate.setPhone(client.getPhone());
-            clientToUpdate.setType_document(clientToUpdate.getType_document());
-            clientToUpdate.setBirthDate(client.getBirthDate());
-            clientToUpdate.setPhone(client.getPhone());
+            clientToUpdate.setDocumentType(client.getDocumentType());
             return clientRepository.save(clientToUpdate);
-        }
-        else{
+        } else {
             return null;
         }
     }
@@ -57,34 +52,16 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void existsClientById(Long id) {
-        if(!clientRepository.existsById(id)){
+        if (!clientRepository.existsById(id)) {
             throw new ValidationException("No existe ningún cliente");
         }
     }
 
     @Override
     public void existsClientByDocument(Client client) {
-        if(clientRepository.existsByDocumentAndRestaurantId(client.getDocument(),client.getRestaurantId())){
+        if (clientRepository.existsByDocumentAndRestaurantId(client.getDocument(), client.getRestaurantId())
+                && !clientRepository.findById(client.getId()).map(existingClient -> existingClient.getDocument().equals(client.getDocument())).orElse(false)) {
             throw new ValidationException("Ya existe un cliente con este numero de documento en el restaurante");
-        }
-    }
-
-    @Override
-    public void validateClient(Client client) {
-        if(client == null){
-            throw new ValidationException("El cliente no puede ser nulo");
-        }
-        if(client.getName() == null || client.getName().isEmpty()){
-            throw new ValidationException("El nombre del cliente es obligatorio");
-        }
-        if(client.getName().length() > 150){
-            throw new ValidationException("El nombre del cliente es muy largo");
-        }
-        if(client.getDocument() == null || client.getDocument().isEmpty()){
-            throw new ValidationException("El número de documento es obligatorio");
-        }
-        if(client.getRestaurantId() == 0){
-            throw new ValidationException("El restaurante asignado debe ser obligatorio");
         }
     }
 }

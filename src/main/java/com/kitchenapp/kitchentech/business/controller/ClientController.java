@@ -21,7 +21,6 @@ public class ClientController {
 
     // URL: http://localhost:8080/api/kitchentech/v1/client/restaurant/{restaurantId}
     // Method: GET
-
     @Transactional(readOnly = true)
     @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<List<Client>> getAllClients(@PathVariable(name = "restaurantId") Long restaurantId){
@@ -47,7 +46,7 @@ public class ClientController {
     @Transactional
     @PostMapping
     public ResponseEntity<Client> createClient(@RequestBody Client client){
-        clientService.validateClient(client);
+        clientService.existsClientByDocument(client);
         return new ResponseEntity<Client>(clientService.createClient(client),HttpStatus.OK);
     }
 
@@ -56,10 +55,14 @@ public class ClientController {
     @PutMapping("/{clientId}")
     public ResponseEntity<Client> updateClient(@PathVariable(name = "clientId") Long clientId, @RequestBody Client client){
         clientService.existsClientById(clientId);
-        clientService.existsClientByDocument(client);
-        clientService.validateClient(client);
 
-        return new ResponseEntity<Client>(clientService.updateClient(client),HttpStatus.OK);
+        Client currentClient = clientService.getClientById(clientId);
+        if (!currentClient.getDocument().equals(client.getDocument())) {
+            clientService.existsClientByDocument(client);
+        }
+
+        client.setId(clientId);
+        return new ResponseEntity<>(clientService.updateClient(client), HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/client/{clientId}

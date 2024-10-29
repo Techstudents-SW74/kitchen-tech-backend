@@ -1,26 +1,25 @@
-package com.kitchenapp.kitchentech.user.model;
+package com.kitchenapp.kitchentech.user.Dto;
 
-import com.kitchenapp.kitchentech.business.model.Restaurant;
+import com.kitchenapp.kitchentech.user.Enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class StaffUserDto {
     private Long id;
     private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
     private String phone;
-    private LocalDate birthDate;
+    private String name;
+    private String lastname;
+    private String email;
     private String photo;
+    private LocalDate birthDate;
     private Role role;
-    private Restaurant restaurant;
+    private Long restaurantId;
 }

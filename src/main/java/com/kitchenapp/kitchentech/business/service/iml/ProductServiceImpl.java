@@ -2,9 +2,9 @@ package com.kitchenapp.kitchentech.business.service.iml;
 
 
 import com.kitchenapp.kitchentech.business.model.Product;
-import com.kitchenapp.kitchentech.business.model.Restaurant;
 import com.kitchenapp.kitchentech.business.repository.ProductRepository;
 import com.kitchenapp.kitchentech.business.service.ProductService;
+import com.kitchenapp.kitchentech.user.model.Restaurant;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +19,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts(Long restaurantId){
+    public List<Product> getAllProductsByRestaurantId(Long restaurantId){
         return productRepository.findByRestaurantId(restaurantId);
     }
     @Override
-    public Product getProductById(Long id){
+    public Product getProductByRestaurantProductId(Long id){
         return productRepository.findById(id).orElse(null);
     }
     @Override
@@ -59,28 +59,4 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
-    @Override
-    public void validateProduct(Product product){
-        if(product == null){
-            throw new IllegalArgumentException("El producto no puede ser nulo");
-        }
-        if (product.getProductName() == null || product.getProductName().isEmpty()){
-            throw new IllegalArgumentException("El nombre del producto debe ser obligatorio");
-        }
-        if (product.getProductName().length() > 50 ){
-            throw new IllegalArgumentException("El nombre del producto no debe exceder los 50 caracteres");
-        }
-        if (product.getProductPrice() == null || product.getProductPrice() <= 0){
-            throw new IllegalArgumentException("El precio del producto es obligatorio");
-        }
-        if (product.getCategory() == null || product.getCategory().isEmpty()){
-            throw new IllegalArgumentException("La categoria del producto es obligatoria");
-        }
-        if (product.getCategory().length() > 50){
-            throw new IllegalArgumentException("La categoria del producto no debe exceder los 50 caracteres");
-        }
-        if (product.getProductPrice() == null){
-            throw new IllegalArgumentException("El precio del producto es obligatoria");
-        }
-    }
 }
