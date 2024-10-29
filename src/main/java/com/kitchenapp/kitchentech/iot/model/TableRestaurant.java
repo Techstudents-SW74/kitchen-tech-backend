@@ -23,6 +23,9 @@ public class TableRestaurant {
     @Column(name = "table_capacity", nullable = false, length = 10)
     private Long tableCapacity;
 
+    @Column(name = "table_guests", nullable = false, length = 10)
+    private Long tableGuests;
+
     @Column(name = "table_status", length = 250)
     private Status tableStatus;
 
