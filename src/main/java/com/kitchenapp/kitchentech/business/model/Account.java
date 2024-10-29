@@ -1,7 +1,8 @@
 package com.kitchenapp.kitchentech.business.model;
 
+import com.kitchenapp.kitchentech.business.Enums.State;
 import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
-import com.kitchenapp.kitchentech.user.model.User;
+import com.kitchenapp.kitchentech.user.model.Restaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 //La cuenta tiene que contener, la orden, el cliente y la mesa
 @Data
@@ -24,37 +28,38 @@ public class Account {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = true)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", nullable = true)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id", nullable = true)
-    private Order order;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "table_id", nullable = true)
+    @JoinColumn(name = "table_id")
     private TableRestaurant table;
 
     @Column(name = "restaurant_id", nullable = false)
-    private long restaurantId;
+    private Long restaurantId;
 
     @Column(name="state",nullable = false)
-    private String state;
+    private State state;
 
     @Column(name = "total_account",nullable = false)
     private Float totalAccount;
 
     @Column(name = "total_guests",nullable = false)
-    private int totalGuests;
+    private Integer totalGuests;
 
     @Column(name = "date_created",nullable = false)
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "date_log",nullable = false)
-    private LocalDate dateLog;
+    private LocalDateTime dateLog;
+
+    @OneToMany(mappedBy = "accountId", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<AccountProduct> products = new ArrayList<>();
+
+    public void updateTotalAccount() {
+        this.totalAccount = (float) products.stream()
+                .mapToDouble(p -> p.getPrice() * p.getQuantity())
+                .sum();
+    }
 
 }

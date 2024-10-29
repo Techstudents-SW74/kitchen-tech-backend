@@ -2,7 +2,8 @@ package com.kitchenapp.kitchentech.authentication.controller;
 
 import com.kitchenapp.kitchentech.authentication.model.AuthResponse;
 import com.kitchenapp.kitchentech.authentication.model.LoginRequest;
-import com.kitchenapp.kitchentech.authentication.model.RegisterRequest;
+import com.kitchenapp.kitchentech.authentication.model.RegisterRestaurantRequest;
+import com.kitchenapp.kitchentech.authentication.model.RegisterStaffUserRequest;
 import com.kitchenapp.kitchentech.authentication.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,30 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // URL: http://localhost:8080/api/kitchentech/v1/auth/register
+    // URL: http://localhost:8080/api/kitchentech/v1/auth/register-restaurant
     // Method: POST
     @Transactional
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> registerUser(@RequestBody RegisterRequest request) {
-        authService.existsUserByUsername(request);
-        authService.validateRegisterRequest(request);
-        AuthResponse registeredUser = authService.register(request);
-        return new ResponseEntity<AuthResponse>(registeredUser, HttpStatus.CREATED);
+    @PostMapping("/register-restaurant")
+    public ResponseEntity<AuthResponse> registerRestaurant(@RequestBody RegisterRestaurantRequest request) {
+        // Verificar si ya existe el nombre de usuario
+        authService.existsUserByUsername(request, null);
+
+        // Registrar el restaurante
+        AuthResponse registeredRestaurant = authService.registerRestaurant(request);
+        return new ResponseEntity<>(registeredRestaurant, HttpStatus.CREATED);
+    }
+
+    // URL: http://localhost:8080/api/kitchentech/v1/auth/register-staff
+    // Method: POST
+    @Transactional
+    @PostMapping("/register-staff")
+    public ResponseEntity<AuthResponse> registerStaffUser(@RequestBody RegisterStaffUserRequest request) {
+        // Verificar si ya existe el nombre de usuario
+        authService.existsUserByUsername(null, request);
+
+        // Registrar al staff
+        AuthResponse registeredStaff = authService.registerStaffUser(request);
+        return new ResponseEntity<>(registeredStaff, HttpStatus.CREATED);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/auth/login
@@ -37,8 +53,7 @@ public class AuthController {
     @Transactional(readOnly = true)
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> loginUser(@RequestBody LoginRequest request) {
-
         AuthResponse loggedUser = authService.login(request);
-        return new ResponseEntity<AuthResponse>(loggedUser, HttpStatus.OK);
+        return new ResponseEntity<>(loggedUser, HttpStatus.OK);
     }
 }

@@ -47,7 +47,6 @@ public class TableController {
     @Transactional
     @PostMapping
     public ResponseEntity<TableRestaurant> createTable(@RequestBody TableRestaurant tableRestaurant) {
-        tableService.validateTable(tableRestaurant);
         return new ResponseEntity<>(tableService.createTable(tableRestaurant), HttpStatus.CREATED);
     }
 
@@ -58,7 +57,6 @@ public class TableController {
         if(tableService.getTableById(tableId) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        tableService.validateTable(tableRestaurant);
         return new ResponseEntity<>(tableService.updateTable(tableRestaurant), HttpStatus.OK);
     }
 

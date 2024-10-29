@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface SupplyRepository extends JpaRepository<Supply, Long> {
     List<Supply> findByRestaurantId(Long restaurantId);
-
+    Boolean existsBySupplyName(String supplyName);
 }

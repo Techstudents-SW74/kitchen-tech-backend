@@ -1,6 +1,6 @@
 package com.kitchenapp.kitchentech.user.model;
 
-import com.kitchenapp.kitchentech.business.model.Restaurant;
+import com.kitchenapp.kitchentech.user.Enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="users")
-public class User implements UserDetails {
+@Table(name="staff_user")
+public class StaffUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,34 +29,32 @@ public class User implements UserDetails {
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(name="first_name", nullable = false, length = 100)
-    private String firstName;
-
-    @Column(name="last_name", nullable = false, length = 100)
-    private String lastName;
-
-    @Column(name="email", nullable = false, length = 200)
-    private String email;
-
     @Column(name="password", nullable = false, length = 100)
     private String password;
 
-    @Column(name="phone", nullable = true, length = 20)
+    @Column(name="name", nullable = false, length = 150)
+    private String name;
+
+    @Column(name="lastname", nullable = false, length = 150)
+    private String lastname;
+
+    @Column(name="phone", length = 20)
     private String phone;
+
+    @Column(name="email", nullable = false, length = 150)
+    private String email;
+
+    @Column(name="photo")
+    private String photo;
 
     @Column(name="birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(name="photo", nullable = true)
-    private String photo;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = true)
-    private Restaurant restaurant;
-
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Long restaurantId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
