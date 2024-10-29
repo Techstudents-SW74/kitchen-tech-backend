@@ -46,7 +46,6 @@ public class AccountServiceImpl implements AccountService {
             accountToUpdate.setTable(account.getTable());
             accountToUpdate.setState(account.getState());
             accountToUpdate.setDateCreated(account.getDateCreated());
-            accountToUpdate.setTotalGuests(account.getTotalGuests());
             accountToUpdate.setDateLog(account.getDateLog());
             accountToUpdate.setProducts(account.getProducts());
             accountToUpdate.updateTotalAccount();

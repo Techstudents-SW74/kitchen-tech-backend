@@ -41,6 +41,7 @@ public class TableServiceImpl implements TableService {
         if (tableRestaurantToUpdate != null){
             tableRestaurantToUpdate.setTableCapacity(tableRestaurant.getTableCapacity());
             tableRestaurantToUpdate.setTableNumber(tableRestaurant.getTableNumber());
+            tableRestaurantToUpdate.setTableGuests(tableRestaurant.getTableGuests());
             tableRestaurantToUpdate.setTableStatus(tableRestaurant.getTableStatus());
             tableRestaurantToUpdate.setRestaurantId(tableRestaurant.getRestaurantId());
             return tableRespository.save(tableRestaurantToUpdate);
