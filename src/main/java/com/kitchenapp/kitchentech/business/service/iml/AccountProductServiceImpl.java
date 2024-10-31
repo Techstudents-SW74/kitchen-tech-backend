@@ -48,6 +48,7 @@ public class AccountProductServiceImpl implements AccountProductService {
         } else {
             // Si no existe, asigna los detalles necesarios y guarda
             accountProduct.setAccountId(account.getId());
+
             accountProduct.setPrice(product.getProductPrice());  // Asigna el precio
             accountProduct.setProductName(product.getProductName());  // Asigna el nombre
             AccountProduct newProduct = accountProductRepository.save(accountProduct);
