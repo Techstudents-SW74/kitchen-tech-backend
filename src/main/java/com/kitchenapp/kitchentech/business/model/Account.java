@@ -47,9 +47,6 @@ public class Account {
     @Column(name = "total_account",nullable = false)
     private Float totalAccount;
 
-    @Column(name = "total_guests",nullable = false)
-    private Integer totalGuests;
-
     @Column(name = "date_created",nullable = false)
     private LocalDateTime dateCreated;
 

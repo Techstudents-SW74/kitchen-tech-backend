@@ -1,8 +1,10 @@
 package com.kitchenapp.kitchentech.iot.service.impl;
 
+import com.kitchenapp.kitchentech.business.model.Product;
 import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
 import com.kitchenapp.kitchentech.iot.repository.TableRespository;
 import com.kitchenapp.kitchentech.iot.service.TableService;
+import jakarta.persistence.Table;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,11 @@ public class TableServiceImpl implements TableService {
     private final TableRespository tableRespository;
     public TableServiceImpl(TableRespository tableRespository) {
         this.tableRespository = tableRespository;
+    }
+
+    @Override
+    public List<TableRestaurant> getAllTablesByRestaurantId(Long restaurantId){
+        return tableRespository.findByRestaurantId(restaurantId);
     }
 
     @Override
