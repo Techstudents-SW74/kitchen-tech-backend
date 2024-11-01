@@ -27,6 +27,9 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "account_name", nullable = false)
+    private String accountName;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
@@ -43,9 +46,6 @@ public class Account {
 
     @Column(name = "total_account",nullable = false)
     private Float totalAccount;
-
-    @Column(name = "total_guests",nullable = false)
-    private Integer totalGuests;
 
     @Column(name = "date_created",nullable = false)
     private LocalDateTime dateCreated;

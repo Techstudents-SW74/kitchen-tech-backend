@@ -1,5 +1,6 @@
 package com.kitchenapp.kitchentech.iot.controller;
 
+import com.kitchenapp.kitchentech.business.model.Product;
 import com.kitchenapp.kitchentech.iot.model.TableRestaurant;
 import com.kitchenapp.kitchentech.iot.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,17 @@ public class TableController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(tableService.getTableById(tableId), HttpStatus.OK);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<List<TableRestaurant>> getAllTablesByRestaurantId(@PathVariable(name = "restaurantId") Long restaurantId) {
+        List<TableRestaurant> tables = tableService.getAllTablesByRestaurantId(restaurantId);
+
+        if (tables.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(tables, HttpStatus.OK);
     }
 
     // URL: http://localhost:8080/api/kitchentech/v1/table
