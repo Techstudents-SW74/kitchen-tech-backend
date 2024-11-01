@@ -4,4 +4,5 @@ public enum Status {
     Free,
     Occupied,
     ToClean,
+    NeedAssistance,
 }
