@@ -68,6 +68,7 @@ public class ProductController {
         product.setProductImageUrl(productDTO.getProductImageUrl());
         product.setCategory(productDTO.getCategory());
         product.setRestaurantId(restaurant.getId());
+        product.setSupplies(productDTO.getSupplies());
 
         Product savedProduct = productRepository.save(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);

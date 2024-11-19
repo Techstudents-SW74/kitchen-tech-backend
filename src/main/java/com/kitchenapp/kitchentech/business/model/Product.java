@@ -37,5 +37,5 @@ public class Product {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "product_supplies", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "supplies")
-    private List<SupplyDTO> supplies = new ArrayList<>();
+    private List<Supply> supplies = new ArrayList<>();
 }
