@@ -36,43 +36,5 @@ public class AccountController {
 
 
 
-    // URL: http://localhost:8080/api/kitchentech/v1/account
-    // Method: POST
-
-    @Transactional
-    @PostMapping
-    public ResponseEntity<Account> createAccount(@RequestBody Account account){
-        orderService.createOrder(account.getOrder());
-        accountService.validateAccount(account);
-        return new ResponseEntity<Account>(accountService.createAccount(account),HttpStatus.CREATED);
-    }
-
-    // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
-    // Method: PUT
-    @PutMapping("/{accountId}")
-    public ResponseEntity<Account> updateAccount(@PathVariable(name="accountId")Long accountId,@RequestBody Account account){
-        if(accountService.getAccountById(accountId)==null){
-            return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
-        }
-
-        orderService.updateOrder(account.getOrder());
-        accountService.validateAccount(account);
-        return new ResponseEntity<Account>(accountService.updateAccount(account),HttpStatus.OK);
-    }
-
-    // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
-    // Method: DELETE
-    @DeleteMapping("/{accountId}")
-    public ResponseEntity<String> deleteAccount(@PathVariable(name="accountId")Long accountId){
-
-        Account account = accountService.getAccountById(accountId);
-
-        if(account == null){
-            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-        }
-        orderService.deleteOrder(account.getOrder().getId());
-        accountService.deleteAccount(accountId);
-
-        return new ResponseEntity<String>("Account deleted successfully",HttpStatus.OK);
-    }
+    
 }
