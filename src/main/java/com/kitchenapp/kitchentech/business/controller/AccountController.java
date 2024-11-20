@@ -34,17 +34,7 @@ public class AccountController {
         return new ResponseEntity<List<Account>>(accountService.getAllAccounts(restaurantId),HttpStatus.OK);
     }
 
-    // URL: http://localhost:8080/api/kitchentech/v1/account/{accountId}
-    // Method: GET
 
-    @Transactional(readOnly = true)
-    @GetMapping("/{accountId}")
-    public ResponseEntity<Account> getAccountById(@PathVariable(name="accountId")Long accountId){
-        if(accountService.getAccountById(accountId) == null){
-            return new ResponseEntity<Account>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Account>(accountService.getAccountById(accountId),HttpStatus.OK);
-    }
 
     // URL: http://localhost:8080/api/kitchentech/v1/account
     // Method: POST
