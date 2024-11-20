@@ -53,7 +53,7 @@ public class Account {
     @Column(name = "date_log",nullable = false)
     private LocalDateTime dateLog;
 
-    @OneToMany(mappedBy = "accountId", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "accountId", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<AccountProduct> products = new ArrayList<>();
 
     public void updateTotalAccount() {
